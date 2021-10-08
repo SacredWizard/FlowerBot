@@ -6,13 +6,13 @@ const logouri = 'https://lh3.googleusercontent.com/QXaAXCfdQthkf5ykh1t5-SVb8uKS9
 dotenv.config();
 
 
-const generateEmbed = (imageuri, uri) => {
+const generateEmbed = (imageuri, uri, interaction, assetNumber) => {
     return new MessageEmbed()
     .setColor('#0099ff')
-    .setTitle('Flower Bot')
+    .setTitle(`Flower #${assetNumber}`)
     .setURL(uri)
-    .setAuthor('OCC', logouri, 'https://occ.xyz')
-    .setDescription('On Chain Collection #1 flowers')
+    .setAuthor('On Chain Collection', logouri, 'https://occ.xyz')
+    .setDescription(`<@!${interaction.member.id}>`)
     .setThumbnail(logouri)
     // .addFields(...attributes.map(x => { return {name: x['trait_type'], value:x['value'], inline:true}}))
     .setImage(imageuri)
@@ -69,13 +69,13 @@ client.on('interactionCreate', async (interaction) => {
             }
             
             
-            const flowerEmbed = generateEmbed(imageuri, imageuri);
+            const flowerEmbed = generateEmbed(imageuri, imageuri, interaction, assetNumber);
             try {
                 interaction.channel.send({
                     embeds: [flowerEmbed]
                 }) && 
                 interaction.reply({
-                    content: `<@!${interaction.member.id}>`,
+                    content: `ok`,
                     hidden: true
                 }) &&
                 interaction.deleteReply();
@@ -99,3 +99,4 @@ client.on('interactionCreate', async (interaction) => {
 
 // Login to Discord with your client's token
 client.login(process.env.TOKEN);
+
